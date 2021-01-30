@@ -6,8 +6,10 @@ import {
   CardContent,
   Typography,
   makeStyles,
+  Divider,
 } from "@material-ui/core";
 import CurrentWeather from '../../components/current';
+import WeekForecast from '../../components/week';
 
 //index.tsx:41 37.3248952 -122.04851549999998
 
@@ -52,13 +54,19 @@ export default function Widget() {
     }
   }, [weatherData]);
 
-  const data = weatherData;
-  console.log(data);
-
   if (!weatherData) {
     return null;
   }
 
+  console.log(weatherData.data.current.dt);
+  const time = weatherData.data.current.dt;
+  const date = new Date(time*1000);
+
+  const convertToDate = () => {
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    const formattedDate = `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
+    return formattedDate;
+  }
   return (
     <Container className={classes.root}>
       <Card elevation={1}>
@@ -68,11 +76,12 @@ export default function Widget() {
           ) : (
             <>
               <Typography variant="h4">Cupertino, CA</Typography>
-              <Typography variant="h6">{now.toUTCString()}</Typography>
-              <Typography variant="h6">Basic</Typography>
+              <Typography variant="h6">{convertToDate()}</Typography>
             </>
           )}
           <CurrentWeather weatherData={weatherData.data.current}/>
+          <Divider />
+          <WeekForecast />
         </CardContent>
       </Card>
     </Container>

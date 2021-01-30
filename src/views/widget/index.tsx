@@ -29,7 +29,6 @@ export default function Widget() {
   const classes = useStyles();
   const [weatherData, setWeatherData] = useState<any>();
   const [loading, setLoading] = useState(false);
-  const now = new Date();
 
   useEffect(() => {
     const getWeatherFromApi = async () => {
@@ -58,14 +57,19 @@ export default function Widget() {
     return null;
   }
 
-  console.log(weatherData.data.current.dt);
+  console.log(weatherData);
   const time = weatherData.data.current.dt;
-  const date = new Date(time*1000);
+  const dateData = new Date(time*1000);
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-  const convertToDate = () => {
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+  const convertToDate = (date: any) => {
     const formattedDate = `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
     return formattedDate;
+  }
+
+  const convertToDay = (day: number) => {
+    const date = new Date(day*1000);
+    return `${months[date.getMonth()]} ${date.getDate()}`;
   }
   return (
     <Container className={classes.root}>
@@ -76,12 +80,12 @@ export default function Widget() {
           ) : (
             <>
               <Typography variant="h4">Cupertino, CA</Typography>
-              <Typography variant="h6">{convertToDate()}</Typography>
+              <Typography variant="h6">{convertToDate(dateData)}</Typography>
             </>
           )}
           <CurrentWeather weatherData={weatherData.data.current}/>
           <Divider />
-          <WeekForecast />
+          <WeekForecast weatherData={weatherData.data.daily} convertToDay={convertToDay} />
         </CardContent>
       </Card>
     </Container>

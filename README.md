@@ -1,5 +1,11 @@
 # Getting Started with Create React App
 
+you will need a free api key from https://openweathermap.org/price
+
+normally apikey would go in the env on a full scale project but for the sake of simplicity of this little exercise it can just be pasted in at line 15 in src/index.tsx
+
+otherwise an npm install and npm start should be all you need
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

@@ -1,25 +1,9 @@
 import React from 'react';
 import { Box, Grid, Typography } from '@material-ui/core';
-
-type WeatherData = {
-  clouds: number;
-  dew_point: number;
-  dt: number;
-  feels_like: { day: number, night: number, eve: number, morn: number }
-  humidity: number;
-  pop: number;
-  pressure: number;
-  sunrise: number;
-  sunset: number;
-  temp: { day: number, min: number, max: number, night: number, eve: number, morn: number }
-  uvi: number;
-  weather: { description: string, icon: string, id: number, main: string }[];
-  wind_deg: number;
-  wind_speed: number;
-}
+import { WeekForecastDataTypes } from '../../services/types';
 
 interface WeekForecastProps {
-  weatherData: WeatherData[];
+  weatherData: WeekForecastDataTypes[];
   convertToDay: (day: number) => string;
 }
 
@@ -28,7 +12,7 @@ export default function WeekForecast({ weatherData, convertToDay }: WeekForecast
   return (
     <Box mt={1}>
       <Grid container spacing={1}>
-        {weatherData.map((day: WeatherData, index) => {
+        {weatherData.map((day: WeekForecastDataTypes, index) => {
           if (index > 0 && index < weatherData.length - 1) {
             return (
               <Grid item sm={2} xs={4} key={day.dt}>
